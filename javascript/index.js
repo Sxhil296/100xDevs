@@ -133,3 +133,22 @@ function calculator(firstEl, secondEL, arithmeticFn){
 
 
  printPyramid(8)
+
+
+ //objects
+ const users1 = {
+name: "Emir",
+age:23,
+addresses: ['delhi', 'sre'],
+isVoter: function(){
+  if (user1.age > 18){
+    return true
+  } else {
+    return false
+  }
+}
+ }
+ console.log(users1.name);
+ console.log(users1.isVoter);
+ console.log(users1.isVoter());
+console.log(users1.addresses[0]);
