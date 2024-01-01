@@ -1,14 +1,20 @@
 import express from "express";
 const app = express();
 const port = 3000;
+import bodyParser from "body-parser";
+
+let numberOfRequests = 0;
 
 function middleware1(req, res, next) {
-  console.log("from middleware " + req.headers.counter);
-//   res.send("error inside middleware")
+  numberOfRequests = numberOfRequests + 1;
+  console.log(numberOfRequests);
+  //   console.log("from middleware " + req.headers.counter);
+  //   res.send("error inside middleware")
   next();
 }
 
 app.use(middleware1);
+app.use(bodyParser.json())
 
 function calculateSum(counter) {
   let sum = 0;
@@ -20,8 +26,10 @@ function calculateSum(counter) {
 
 function handleRequest(req, res) {
   // let counter = req.query.counter
-  console.log(req.headers);
-  let counter = req.headers.counter;
+  //   console.log(req.headers);
+    // let counter = req.headers.counter;
+    // console.log(req.body);
+  let counter = req.body.counter;
   // let calculatedSum = calculateSum(100);
   let calculatedSum = calculateSum(counter);
 
