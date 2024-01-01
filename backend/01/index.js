@@ -1,31 +1,42 @@
-import express from "express"
-const app = express()
-const port = 3000
+import express from "express";
+const app = express();
+const port = 3000;
 
-
-function calculateSum(counter){
-    let sum = 0
-    for(let i=0; i<=counter;i++){
-        sum = sum+i
-    }
-    return sum;
+function middleware1(req, res, next) {
+  console.log("from middleware " + req.headers.counter);
+//   res.send("error inside middleware")
+  next();
 }
 
-function handleRequest(req, res){
-    let counter = req.query.counter
-    let calculatedSum = calculateSum(counter);
+app.use(middleware1);
 
-    let answer = "The sum is " + calculatedSum
-    res.send(answer)
+function calculateSum(counter) {
+  let sum = 0;
+  for (let i = 0; i <= counter; i++) {
+    sum = sum + i;
+  }
+  return sum;
 }
 
-app.get('/handleSum', handleRequest)
+function handleRequest(req, res) {
+  // let counter = req.query.counter
+  console.log(req.headers);
+  let counter = req.headers.counter;
+  // let calculatedSum = calculateSum(100);
+  let calculatedSum = calculateSum(counter);
 
-function started(){
-    console.log(`App is running on port ${port}`);
+  let answer = "The sum is " + calculatedSum;
+  res.send(answer);
 }
 
-app.listen(port, started)
+// app.get('/handleSum', handleRequest)
+app.post("/handleSum", handleRequest);
+
+function started() {
+  console.log(`App is running on port ${port}`);
+}
+
+app.listen(port, started);
 
 // let result = calculateSum(100)
 // console.log(result);
